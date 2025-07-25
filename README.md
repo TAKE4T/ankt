@@ -131,15 +131,43 @@ ENVIRONMENT=development
 
 ## 🚀 デプロイ
 
-### AWS Amplify (フロントエンドのみ)
+### 🎯 オプション1: AWS Amplify フルスタック (推奨)
 
-1. AWS Amplifyコンソールでアプリを作成
-2. GitHubリポジトリ `https://github.com/TAKE4T/ankt` を接続
-3. ビルド設定で `kanpo-ai` フォルダをルートディレクトリに指定
-4. 環境変数を設定:
-   - `BACKEND_URL`: バックエンドサーバーのURL（例: https://your-backend.herokuapp.com）
+**1. AWS Amplify Console**
+1. https://console.aws.amazon.com/amplify/ にアクセス
+2. 「New app」→「Host web app」を選択
+3. GitHub接続後、`TAKE4T/ankt` リポジトリを選択
 
-### バックエンドデプロイ (別途必要)
+**2. アプリ設定**
+- **App name**: `kanpo-ai`
+- **Environment**: `main`
+- **Build settings**: 自動検出（amplify.ymlを使用）
+
+**3. 環境変数設定**
+- `OPENAI_API_KEY`: あなたのOpenAI APIキー
+- `ENVIRONMENT`: `production`
+
+**4. デプロイ実行**
+- 設定を保存してビルド開始
+- フロントエンド + バックエンド（Lambda）が自動デプロイ
+
+### 🎯 オプション2: Serverless Framework
+
+```bash
+# Serverless CLI インストール
+npm install -g serverless
+
+# AWS認証設定
+serverless config credentials --provider aws --key YOUR_KEY --secret YOUR_SECRET
+
+# バックエンドデプロイ
+cd backend
+serverless deploy
+
+# フロントエンドは別途AWS Amplifyでデプロイ
+```
+
+### 🎯 オプション3: 分離デプロイ
 
 バックエンドは以下のサービスでデプロイできます：
 

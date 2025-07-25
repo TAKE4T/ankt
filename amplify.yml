@@ -17,3 +17,16 @@ applications:
         paths:
           - node_modules/**/*
           - .next/cache/**/*
+  - appRoot: kanpo-ai/backend
+    backend:
+      phases:
+        preBuild:
+          commands:
+            - pip install -r requirements.txt
+        build:
+          commands:
+            - echo "Backend Lambda build completed"
+      artifacts:
+        baseDirectory: .
+        files:
+          - '**/*'

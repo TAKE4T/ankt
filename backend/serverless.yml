@@ -1,0 +1,41 @@
+service: kanpo-ai-backend
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.9
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-1'}
+  environment:
+    ENVIRONMENT: ${self:provider.stage}
+    OPENAI_API_KEY: ${env:OPENAI_API_KEY}
+  httpApi:
+    cors:
+      allowedOrigins:
+        - '*'
+      allowedHeaders:
+        - Content-Type
+        - Authorization
+      allowedMethods:
+        - GET
+        - POST
+        - PUT
+        - DELETE
+        - OPTIONS
+
+functions:
+  api:
+    handler: lambda_handler.lambda_handler
+    events:
+      - httpApi: '*'
+    timeout: 30
+    memorySize: 512
+
+plugins:
+  - serverless-python-requirements
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
+    strip: false
