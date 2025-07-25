@@ -1,6 +1,7 @@
 version: 1
 applications:
-  - frontend:
+  - appRoot: kanpo-ai
+    frontend:
       phases:
         preBuild:
           commands:
@@ -16,16 +17,3 @@ applications:
         paths:
           - node_modules/**/*
           - .next/cache/**/*
-  - backend:
-      phases:
-        preBuild:
-          commands:
-            - cd backend
-            - pip install -r requirements.txt
-        build:
-          commands:
-            - echo "Backend build completed"
-      artifacts:
-        baseDirectory: backend
-        files:
-          - '**/*'
